@@ -1,0 +1,13 @@
+{
+  "name": "site-mbigucci",
+  "version": "1.0.0",
+  "description": "Site Linktree Mbigucci",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

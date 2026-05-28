@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mbigucci Construtora | Links</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-top: #D32F2F;              
+      --bg-bottom: #000000;           
+      --bg-gradient: linear-gradient(180deg, var(--bg-top) 0%, #8B0000 40%, #1a0000 80%, var(--bg-bottom) 100%);
+      --card-bg: rgba(20, 20, 20, 0.6); 
+      --card-border: rgba(255, 255, 255, 0.15);
+      --card-hover: rgba(211, 47, 47, 0.2);
+      --text: #FFFFFF;
+      --text-muted: rgba(255, 255, 255, 0.7);
+      --accent: #FF3D3D;              
+      --accent-glow: rgba(255, 61, 61, 0.5);
+      --accent-secondary: #00E5FF;    
+      --radius: 16px;
+      --shadow-glow: 0 0 20px var(--accent-glow);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Nunito', system-ui, -apple-system, sans-serif;
+      background: var(--bg-gradient);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 40px 16px 60px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Fundo Tech (Blueprint) */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(45deg, rgba(211, 47, 47, 0.06) 1px, transparent 1px),
+        linear-gradient(-45deg, rgba(211, 47, 47, 0.06) 1px, transparent 1px);
+      background-size: 40px 40px, 40px 40px, 80px 80px, 80px 80px;
+      pointer-events: none;
+      z-index: 0;
+    }
+    
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.7) 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* === MARCA D'ÁGUA SIMPLIFICADA === */
+    .bg-watermark {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 70%; /* Ocupa 70% da altura a partir do fundo */
+      /* 👇 TROQUE PELO NOME DO SEU ARQUIVO NA PASTA public */
+      background-image: url('marca-dagua.png');
+      background-position: bottom center;
+      background-repeat: no-repeat;
+      background-size: contain;
+      opacity: 0.12; /* Bem sutil */
+      pointer-events: none;
+      z-index: 0;
+      /* Degrade para desaparecer no topo */
+      -webkit-mask-image: linear-gradient(to top, black 0%, transparent 100%);
+      mask-image: linear-gradient(to top, black 0%, transparent 100%);
+    }
+
+    .container { width: 100%; max-width: 440px; position: relative; z-index: 1; }
+    .header { margin-bottom: 32px; text-align: center; }
+
+    /* Estilos da LOGO principal */
+    .logo {
+      width: 240px;
+      height: auto;
+      margin-bottom: 16px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      filter: drop-shadow(0 0 15px var(--accent-glow));
+      transition: transform 0.3s ease;
+    }
+    .logo:hover { transform: scale(1.05); }
+
+    .tagline { color: var(--text-muted); font-size: 1rem; margin-bottom: 8px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; }
+
+    .links { display: flex; flex-direction: column; gap: 16px; }
+    .link-card {
+      background: var(--card-bg); backdrop-filter: blur(10px); padding: 20px 22px; border-radius: var(--radius);
+      text-decoration: none; color: var(--text); display: flex; align-items: flex-start; gap: 16px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); border: 1px solid var(--card-border);
+      text-align: left; position: relative; overflow: hidden; border-left: 3px solid rgba(211, 47, 47, 0.3);
+    }
+    .link-card::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent); transition: left 0.5s ease; }
+    .link-card:hover::before { left: 100%; }
+    .link-card:hover { background: var(--card-hover); transform: translateY(-4px) scale(1.02); border-color: var(--accent); border-left: 3px solid var(--accent); box-shadow: var(--shadow-glow), 0 10px 40px rgba(0,0,0,0.6); }
+    .card-icon { font-size: 1.6rem; flex-shrink: 0; width: 40px; text-align: center; margin-top: 2px; filter: drop-shadow(0 0 5px var(--accent-glow)); }
+    .card-content { flex: 1; }
+    .card-title { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 1.1rem; margin-bottom: 6px; color: #FFFFFF; text-shadow: 0 0 5px rgba(255, 255, 255, 0.8), 0 0 10px rgba(255, 255, 255, 0.5), 0 2px 3px rgba(0, 0, 0, 0.8); letter-spacing: 0.5px; }
+    .card-desc { color: var(--text-muted); font-size: 0.9rem; line-height: 1.45; font-weight: 600; }
+    .arrow { color: var(--accent-secondary); font-weight: 800; margin-top: 8px; transition: 0.3s; font-size: 1.1rem; }
+    .link-card:hover .arrow { transform: translateX(6px); color: #FFFFFF; text-shadow: 0 0 10px var(--accent-secondary); }
+    .link-card.bigs-highlight { border-left: 3px solid var(--accent); background: linear-gradient(135deg, rgba(211,47,47,0.3), rgba(0,0,0,0.5)); }
+    .link-card.bigs-highlight:hover { box-shadow: 0 0 30px var(--accent-glow), 0 15px 50px rgba(0,0,0,0.7); }
+    footer { margin-top: 50px; color: var(--text-muted); font-size: 0.8rem; opacity: 0.8; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; text-align: center; font-weight: 600; }
+    
+    @media (max-width: 480px) { 
+      .logo { width: 180px; } 
+      .bg-watermark { 
+        height: 60%;
+        background-size: 80% auto;
+      }
+      .link-card { padding: 18px; } 
+      .card-title { font-size: 1rem; } 
+      .card-icon { font-size: 1.4rem; width: 36px; } 
+    }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .link-card { animation: fadeInUp 0.4s ease forwards; animation-delay: calc(var(--i, 0) * 0.1s); }
+  </style>
+</head>
+<body>
+  <!-- Marca d'água de fundo -->
+  <div class="bg-watermark"></div>
+
+  <div class="container">
+    <div class="header">
+      <img src="logo.png" alt="Mbigucci Construtora" class="logo">
+      <p class="tagline">UMA CONSTRUTORA COMPLETA</p>
+    </div>
+
+    <div class="links">
+      <a href="https://ugc.production.linktr.ee/f217f423-b82d-431c-84c5-31d0b8e60ae7_Bigs.pdf" class="link-card bigs-highlight" target="_blank" style="--i: 1">
+        <div class="card-icon">🚀</div>
+        <div class="card-content">
+          <div class="card-title">BIGS</div>
+          <div class="card-desc">Projetos de impacto social e ambiental</div>
+        </div>
+        <div class="arrow"></div>
+      </a>
+
+      <a href="#" class="link-card" style="--i: 2">
+        <div class="card-icon">🏭</div>
+        <div class="card-content">
+          <div class="card-title">Usinas</div>
+          <div class="card-desc">Estrutura fabril e logística inteligente</div>
+        </div>
+        <div class="arrow">→</div>
+      </a>
+
+      <a href="https://mbigucci.com.br/institucional/" class="link-card" target="_blank" style="--i: 3">
+        <div class="card-icon">🎯</div>
+        <div class="card-content">
+          <div class="card-title">Missão & Valores</div>
+          <div class="card-desc">Princípios que guiam nossa trajetória</div>
+        </div>
+        <div class="arrow">↗</div>
+      </a>
+
+      <a href="https://drive.google.com/file/d/1E7vjWSgxuco_OMH2T8XyGQkDy2f7UxpH/preview" class="link-card" target="_blank" style="--i: 4">
+        <div class="card-icon">🎙️</div>
+        <div class="card-content">
+          <div class="card-title">De Frente com Roberta</div>
+          <div class="card-desc">Liderança, visão e bastidores</div>
+        </div>
+        <div class="arrow">📄</div>
+      </a>
+
+      <a href="https://mbigucci.com.br/pacto-global/" class="link-card" target="_blank" style="--i: 5">
+        <div class="card-icon">🌐</div>
+        <div class="card-content">
+          <div class="card-title">Pacto Global</div>
+          <div class="card-desc">Compromisso ONU: sustentabilidade e ética</div>
+        </div>
+        <div class="arrow">↗</div>
+      </a>
+
+      <a href="#" class="link-card" style="--i: 6">
+        <div class="card-icon">⚙️</div>
+        <div class="card-content">
+          <div class="card-title">Lean Hunter</div>
+          <div class="card-desc">Eficiência máxima, zero desperdício</div>
+        </div>
+        <div class="arrow">→</div>
+      </a>
+
+      <a href="#" class="link-card" style="--i: 7">
+        <div class="card-icon">📊</div>
+        <div class="card-content">
+          <div class="card-title">Investir para Reduzir</div>
+          <div class="card-desc">Tecnologia que gera economia estratégica</div>
+        </div>
+        <div class="arrow">→</div>
+      </a>
+    </div>
+
+    <footer>
+      © 2026 Mbigucci Construtora • Todos os direitos reservados
+    </footer>
+  </div>
+</body>
+</html>

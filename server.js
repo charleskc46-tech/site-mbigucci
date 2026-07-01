@@ -12,8 +12,13 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
+// Health check para o Render
+app.get('/health', (req, res) => {
+  res.status(200).send('OK');
+});
+
 // Inicia o servidor
 app.listen(PORT, () => {
   console.log(`🚀 Servidor rodando na porta ${PORT}`);
-  console.log(` Acesse: http://localhost:${PORT}`);
+  console.log(`📍 Acesse: http://localhost:${PORT}`);
 });

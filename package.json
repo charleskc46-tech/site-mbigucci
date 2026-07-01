@@ -1,7 +1,7 @@
 {
   "name": "site-mbigucci",
   "version": "1.0.0",
-  "description": "Site Linktree Mbigucci",
+  "description": "Site Linktree Mbigucci Construtora",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

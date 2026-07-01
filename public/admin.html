@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Mbigucci</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root { --bg:#0a0a0a; --panel:#141414; --border:#333; --accent:#D32F2F; --text:#fff; }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body { font-family:'Nunito',sans-serif; background:var(--bg); color:var(--text); height:100vh; overflow:hidden; }
+    
+    .admin-layout { display:flex; height:100vh; }
+    .sidebar { width:380px; background:var(--panel); border-right:1px solid var(--border); padding:20px; overflow-y:auto; display:flex; flex-direction:column; gap:15px; }
+    .preview-pane { flex:1; background:#000; position:relative; }
+    iframe { width:100%; height:100%; border:none; }
+    
+    h2 { margin-bottom:10px; color:var(--accent); font-size:1.3rem; }
+    input, button { width:100%; padding:10px; border-radius:8px; border:1px solid var(--border); background:#222; color:#fff; font-family:inherit; }
+    button { background:var(--accent); font-weight:700; cursor:pointer; border:none; transition:0.2s; }
+    button:hover { opacity:0.85; }
+    .card-item { background:#1a1a1a; padding:10px; border-radius:8px; margin-bottom:10px; border:1px solid var(--border); }
+    .row { display:flex; gap:8px; } .row input { flex:1; }
+    .actions { display:flex; gap:8px; margin-top:8px; } .actions button { flex:1; padding:8px; }
+    .btn-sec { background:#444; } .btn-del { background:#c62828; }
+    .hidden { display:none !important; }
+    .tabs { display:flex; gap:8px; margin-bottom:10px; border-bottom:1px solid var(--border); padding-bottom:8px; }
+    .tab { background:transparent; border:1px solid var(--border); color:#888; padding:8px 12px; border-radius:8px; cursor:pointer; font-size:0.9rem; }
+    .tab.active { background:var(--accent); color:#fff; border-color:var(--accent); }
+    .setting-group { margin-bottom:10px; }
+    .setting-group label { font-size:0.8rem; color:#999; display:block; margin-bottom:3px; }
+    .back { color:var(--accent); text-decoration:none; font-weight:600; font-size:0.9rem; cursor:pointer; }
+    .toast { position:fixed; bottom:20px; right:20px; background:#2e7d32; color:#fff; padding:10px 16px; border-radius:8px; opacity:0; transition:0.3s; pointer-events:none; z-index:1000; }
+    .toast.show { opacity:1; }
+    
+    @media(max-width:768px){ .admin-layout{flex-direction:column;} .sidebar{width:100%;height:50vh;} .preview-pane{height:50vh;} }
+  </style>
+</head>
+<body>
+  <div class="admin-layout">
+    <!-- BARRA LATERAL -->
+    <div class="sidebar">
+      <a href="/" class="back">← Voltar ao site</a>
+      
+      <div id="login-view">
+        <h2>🔒 Área Restrita</h2>
+        <input type="password" id="pass" placeholder="Senha" onkeypress="if(event.key==='Enter')login()">
+        <button onclick="login()" style="margin-top:10px;">Entrar</button>
+      </div>
+
+      <div id="main-view" class="hidden">
+        <div class="tabs">
+          <button class="tab active" onclick="switchTab('cards')">📇 Cards</button>
+          <button class="tab" onclick="switchTab('design')">🎨 Design</button>
+        </div>
+        
+        <!-- ABA CARDS -->
+        <div id="cards-tab">
+          <div id="cards-list"></div>
+          <button onclick="addCard()" style="background:#2e7d32; margin-top:8px;">+ Novo Card</button>
+          <div class="actions"><button onclick="saveCards()">💾 Salvar Cards</button></div>
+        </div>
+
+        <!-- ABA DESIGN -->
+        <div id="design-tab" class="hidden">
+          <div class="setting-group"><label>Cor Topo (Degradê)</label><input type="color" id="s-bgTop"></div>
+          <div class="setting-group"><label>Cor Fundo (Degradê)</label><input type="color" id="s-bgBottom"></div>
+          <div class="setting-group"><label>Cor Destaque</label><input type="color" id="s-accent"></div>
+          <div class="setting-group"><label>Cor Ícones/Setas</label><input type="color" id="s-accentSecondary"></div>
+          <div class="setting-group"><label>Fundo dos Cards</label><input type="text" id="s-cardBg"></div>
+          <div class="setting-group"><label>Borda dos Cards</label><input type="text" id="s-cardBorder"></div>
+          <div class="setting-group"><label>Tagline (Subtítulo)</label><input type="text" id="s-tagline"></div>
+          <div class="setting-group"><label>Rodapé</label><input type="text" id="s-footerText"></div>
+          <div class="actions">
+            <button onclick="saveSettings()">💾 Salvar no Servidor</button>
+            <button class="btn-sec" onclick="resetSettings()">🔄 Resetar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PREVIEW AO VIVO -->
+    <div class="preview-pane">
+      <iframe id="preview" src="/" title="Preview do Site"></iframe>
+    </div>
+  </div>
+  <div id="toast" class="toast">✅ Salvo!</div>
+
+  <script>
+    const PASS = 'mbigucci2026';
+    let cards = [], settings = {};
+    const preview = document.getElementById('preview');
+
+    function login() {
+      if(document.getElementById('pass').value === PASS) {
+        document.getElementById('login-view').classList.add('hidden');
+        document.getElementById('main-view').classList.remove('hidden');
+        loadAll();
+      } else alert('Senha incorreta!');
+    }
+
+    function loadAll() {
+      fetch('/api/data').then(r=>r.json()).then(d => { cards = d; renderCards(); });
+      fetch('/api/settings').then(r=>r.json()).then(s => { settings = s; renderSettings(); });
+    }
+
+    function switchTab(t) {
+      document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+      document.querySelector(`.tab[onclick="switchTab('${t}')"]`).classList.add('active');
+      document.getElementById('cards-tab').classList.toggle('hidden', t!=='cards');
+      document.getElementById('design-tab').classList.toggle('hidden', t!=='design');
+    }
+
+    // --- CARDS ---
+    function renderCards() {
+      document.getElementById('cards-list').innerHTML = cards.map((c,i) => `
+        <div class="card-item">
+          <div class="row">
+            <input style="width:50px" value="${c.icon}" onchange="u(${i},'icon',this.value)">
+            <input value="${c.title}" onchange="u(${i},'title',this.value)" placeholder="Título">
+          </div>
+          <input value="${c.desc}" onchange="u(${i},'desc',this.value)" placeholder="Descrição" style="margin-top:6px">
+          <input value="${c.link}" onchange="u(${i},'link',this.value)" placeholder="Link (# para vazio)" style="margin-top:6px">
+          <label style="display:flex;gap:6px;margin-top:6px;font-size:0.8rem;color:#aaa">
+            <input type="checkbox" ${c.highlight?'checked':''} onchange="u(${i},'highlight',this.checked)"> Destaque
+          </label>
+          <div class="actions">
+            <button class="btn-sec" onclick="mv(${i},-1)">⬆️</button>
+            <button class="btn-sec" onclick="mv(${i},1)">️</button>
+            <button class="btn-del" onclick="rm(${i})">🗑️</button>
+          </div>
+        </div>`).join('');
+    }
+    function u(i,k,v){cards[i][k]=v;}
+    function mv(i,d){if((d===-1&&i===0)||(d===1&&i===cards.length-1))return;[cards[i],cards[i+d]]=[cards[i+d],cards[i]];renderCards();}
+    function rm(i){if(confirm('Remover?')){cards.splice(i,1);renderCards();}}
+    function addCard(){cards.push({id:Date.now(),title:'Novo',desc:'Descrição',icon:'🔗',link:'#',highlight:false});renderCards();}
+    async function saveCards(){
+      const r=await fetch('/api/data',{method:'POST',headers:{'Content-Type':'application/json','Authorization':`Bearer ${PASS}`},body:JSON.stringify(cards)});
+      if(r.ok)toast(); else alert('Erro ao salvar!');
+    }
+
+    // --- DESIGN & PREVIEW ---
+    function renderSettings() {
+      document.getElementById('s-bgTop').value = settings.bgTop || '#D32F2F';
+      document.getElementById('s-bgBottom').value = settings.bgBottom || '#8B0000';
+      document.getElementById('s-accent').value = settings.accent || '#FF3D3D';
+      document.getElementById('s-accentSecondary').value = settings.accentSecondary || '#FFD700';
+      document.getElementById('s-cardBg').value = settings.cardBg || 'rgba(0,0,0,0.4)';
+      document.getElementById('s-cardBorder').value = settings.cardBorder || 'rgba(255,255,255,0.2)';
+      document.getElementById('s-tagline').value = settings.tagline || 'UMA CONSTRUTORA COMPLETA';
+      document.getElementById('s-footerText').value = settings.footerText || '© 2026 Mbigucci Construtora • Todos os direitos reservados';
+      sendPreviewUpdate(); // Aplica ao carregar
+    }
+
+    function updateSetting(key, value) {
+      settings[key] = value;
+      sendPreviewUpdate();
+    }
+
+    function sendPreviewUpdate() {
+      if(preview.contentWindow) {
+        preview.contentWindow.postMessage({ type: 'updateDesign', settings }, '*');
+      }
+    }
+
+    // Bind inputs to live update
+    document.querySelectorAll('#design-tab input').forEach(input => {
+      input.addEventListener('input', (e) => {
+        const key = e.target.id.replace('s-', '');
+        updateSetting(key, e.target.value);
+      });
+    });
+
+    async function saveSettings() {
+      const r = await fetch('/api/settings', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json','Authorization':`Bearer ${PASS}`},
+        body: JSON.stringify(settings)
+      });
+      if(r.ok) toast(); else alert('Erro ao salvar!');
+    }
+
+    function resetSettings() {
+      settings = {
+        bgTop:'#D32F2F', bgBottom:'#8B0000', accent:'#FF3D3D', accentSecondary:'#FFD700',
+        cardBg:'rgba(0,0,0,0.4)', cardBorder:'rgba(255,255,255,0.2)',
+        tagline:'UMA CONSTRUTORA COMPLETA', footerText:'© 2026 Mbigucci Construtora • Todos os direitos reservados'
+      };
+      renderSettings();
+      saveSettings();
+    }
+
+    function toast(){const t=document.getElementById('toast');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2000);}
+  </script>
+</body>
+</html>

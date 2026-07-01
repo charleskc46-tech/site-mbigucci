@@ -1,0 +1,10 @@
+{
+  "bgTop": "#ff0000",
+  "bgBottom": "#ff0000",
+  "accent": "#080808",
+  "accentSecondary": "#ffffff",
+  "cardBg": "rgba(0, 0, 0, 0.4)",
+  "cardBorder": "rgba(255, 255, 255, 0.2)",
+  "tagline": "UMA CONSTRUTORA COMPLETA",
+  "footerText": "© 2026 Mbigucci Construtora • Todos os direitos reservados"
+}

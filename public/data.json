@@ -1,0 +1,58 @@
+[
+  {
+    "id": 1,
+    "title": "BIGS",
+    "desc": "Projetos de impacto social e ambiental",
+    "icon": "🚀",
+    "link": "https://docs.google.com/gview?embedded=true&url=https://ugc.production.linktr.ee/f217f423-b82d-431c-84c5-31d0b8e60ae7_Bigs.pdf",
+    "highlight": true
+  },
+  {
+    "id": 2,
+    "title": "Usinas",
+    "desc": "Estrutura fabril e logística inteligente",
+    "icon": "🏭",
+    "link": "#",
+    "highlight": false
+  },
+  {
+    "id": 3,
+    "title": "Missão & Valores",
+    "desc": "Princípios que guiam nossa trajetória",
+    "icon": "🎯",
+    "link": "https://mbigucci.com.br/institucional/",
+    "highlight": false
+  },
+  {
+    "id": 4,
+    "title": "De Frente com Roberta",
+    "desc": "Liderança, visão e bastidores",
+    "icon": "🎙️",
+    "link": "https://drive.google.com/file/d/1E7vjWSgxuco_OMH2T8XyGQkDy2f7UxpH/preview",
+    "highlight": false
+  },
+  {
+    "id": 5,
+    "title": "Pacto Global",
+    "desc": "Compromisso ONU: sustentabilidade e ética",
+    "icon": "🌐",
+    "link": "https://mbigucci.com.br/pacto-global/",
+    "highlight": false
+  },
+  {
+    "id": 6,
+    "title": "Lean Hunter",
+    "desc": "Eficiência máxima, zero desperdício",
+    "icon": "⚙️",
+    "link": "#",
+    "highlight": false
+  },
+  {
+    "id": 7,
+    "title": "Investir para Reduzir",
+    "desc": "Tecnologia que gera economia estratégica",
+    "icon": "📊",
+    "link": "#",
+    "highlight": false
+  }
+]

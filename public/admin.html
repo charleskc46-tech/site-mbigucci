@@ -11,80 +11,104 @@
     body { font-family:'Nunito',sans-serif; background:var(--bg); color:var(--text); height:100vh; overflow:hidden; }
     
     .admin-layout { display:flex; height:100vh; }
-    .sidebar { width:380px; background:var(--panel); border-right:1px solid var(--border); padding:20px; overflow-y:auto; display:flex; flex-direction:column; gap:15px; }
+    .sidebar { width:50vw; background:var(--panel); border-right:1px solid var(--border); padding:30px; overflow-y:auto; display:flex; flex-direction:column; gap:25px; }
     .preview-pane { flex:1; background:#000; position:relative; }
     iframe { width:100%; height:100%; border:none; }
     
-    h2 { margin-bottom:10px; color:var(--accent); font-size:1.3rem; }
-    input, button { width:100%; padding:10px; border-radius:8px; border:1px solid var(--border); background:#222; color:#fff; font-family:inherit; }
+    h2 { margin-bottom:15px; color:var(--accent); font-size:1.6rem; }
+    
+    /* Inputs e Botões Maiores */
+    input, button { width:100%; padding:14px 16px; border-radius:10px; border:1px solid var(--border); background:#222; color:#fff; font-family:inherit; font-size:1.05rem; min-height:50px; }
     button { background:var(--accent); font-weight:700; cursor:pointer; border:none; transition:0.2s; }
     button:hover { opacity:0.85; }
-    .card-item { background:#1a1a1a; padding:10px; border-radius:8px; margin-bottom:10px; border:1px solid var(--border); }
-    .row { display:flex; gap:8px; } .row input { flex:1; }
-    .actions { display:flex; gap:8px; margin-top:8px; } .actions button { flex:1; padding:8px; }
-    .btn-sec { background:#444; } .btn-del { background:#c62828; }
-    .hidden { display:none !important; }
-    .tabs { display:flex; gap:8px; margin-bottom:10px; border-bottom:1px solid var(--border); padding-bottom:8px; }
-    .tab { background:transparent; border:1px solid var(--border); color:#888; padding:8px 12px; border-radius:8px; cursor:pointer; font-size:0.9rem; }
-    .tab.active { background:var(--accent); color:#fff; border-color:var(--accent); }
-    .setting-group { margin-bottom:10px; }
-    .setting-group label { font-size:0.8rem; color:#999; display:block; margin-bottom:3px; }
-    .back { color:var(--accent); text-decoration:none; font-weight:600; font-size:0.9rem; cursor:pointer; }
-    .toast { position:fixed; bottom:20px; right:20px; background:#2e7d32; color:#fff; padding:10px 16px; border-radius:8px; opacity:0; transition:0.3s; pointer-events:none; z-index:1000; }
-    .toast.show { opacity:1; }
     
-    @media(max-width:768px){ .admin-layout{flex-direction:column;} .sidebar{width:100%;height:50vh;} .preview-pane{height:50vh;} }
+    .card-item { background:#1a1a1a; padding:22px; border-radius:14px; margin-bottom:22px; border:1px solid var(--border); }
+    .row { display:flex; gap:15px; align-items:center; }
+    
+    /* Campo de Ícone Grande */
+    .icon-input { flex:0 0 85px !important; text-align:center; font-size:1.8rem !important; padding:10px !important; min-height:54px !important; }
+    .title-input { flex:1; font-size:1.1rem !important; }
+    .desc-input, .link-input { margin-top:14px !important; font-size:1.05rem !important; }
+    
+    .highlight-check { display:flex; align-items:center; gap:12px; margin-top:16px; font-size:1.05rem; color:#ccc; cursor:pointer; user-select:none; }
+    .highlight-check input[type="checkbox"] { width:24px; height:24px; cursor:pointer; accent-color:var(--accent); padding:0; min-height:auto; }
+    
+    .actions { display:flex; gap:12px; margin-top:16px; }
+    .actions button { flex:1; padding:12px; font-size:1rem; }
+    .btn-sec { background:#444; } .btn-del { background:#c62828; }
+    
+    .hidden { display:none !important; }
+    .tabs { display:flex; gap:12px; margin-bottom:18px; border-bottom:1px solid var(--border); padding-bottom:12px; }
+    .tab { background:transparent; border:1px solid var(--border); color:#888; padding:12px 22px; border-radius:10px; cursor:pointer; font-size:1.05rem; font-weight:600; transition:0.2s; }
+    .tab.active { background:var(--accent); color:#fff; border-color:var(--accent); }
+    .tab:hover { color:#fff; border-color:#555; }
+    
+    .setting-group { margin-bottom:18px; }
+    .setting-group label { font-size:1rem; color:#bbb; display:block; margin-bottom:8px; font-weight:600; }
+    .setting-group input[type="color"] { height:50px; padding:4px; cursor:pointer; }
+    
+    .back { color:var(--accent); text-decoration:none; font-weight:700; font-size:1.1rem; cursor:pointer; display:inline-flex; align-items:center; gap:8px; margin-bottom:10px; }
+    .toast { position:fixed; bottom:30px; right:30px; background:#2e7d32; color:#fff; padding:16px 28px; border-radius:10px; opacity:0; transition:0.3s; pointer-events:none; z-index:1000; font-weight:700; font-size:1.05rem; }
+    .toast.show { opacity:1; }
+    .warning { color:#ffaa00; font-size:1rem; margin-bottom:18px; padding:14px; background:rgba(255,170,0,0.1); border-radius:8px; border-left:4px solid #ffaa00; }
+    
+    .sidebar::-webkit-scrollbar { width:10px; }
+    .sidebar::-webkit-scrollbar-track { background:#0a0a0a; }
+    .sidebar::-webkit-scrollbar-thumb { background:#333; border-radius:5px; }
+    
+    @media(max-width:1024px){ 
+      .admin-layout{flex-direction:column;} 
+      .sidebar{width:100%; height:50vh; border-right:none; border-bottom:1px solid var(--border); padding:20px;} 
+      .preview-pane{height:50vh;} 
+    }
   </style>
 </head>
 <body>
   <div class="admin-layout">
-    <!-- BARRA LATERAL -->
     <div class="sidebar">
       <a href="/" class="back">← Voltar ao site</a>
       
       <div id="login-view">
         <h2>🔒 Área Restrita</h2>
-        <input type="password" id="pass" placeholder="Senha" onkeypress="if(event.key==='Enter')login()">
-        <button onclick="login()" style="margin-top:10px;">Entrar</button>
+        <p class="warning">Digite a senha para acessar o painel</p>
+        <input type="password" id="pass" placeholder="Senha de acesso" onkeypress="if(event.key==='Enter')login()">
+        <button onclick="login()" style="margin-top:18px;">Entrar no Painel</button>
       </div>
 
       <div id="main-view" class="hidden">
         <div class="tabs">
-          <button class="tab active" onclick="switchTab('cards')">📇 Cards</button>
-          <button class="tab" onclick="switchTab('design')">🎨 Design</button>
+          <button class="tab active" onclick="switchTab('cards')"> Editar Cards</button>
+          <button class="tab" onclick="switchTab('design')"> Personalizar Design</button>
         </div>
         
-        <!-- ABA CARDS -->
         <div id="cards-tab">
           <div id="cards-list"></div>
-          <button onclick="addCard()" style="background:#2e7d32; margin-top:8px;">+ Novo Card</button>
-          <div class="actions"><button onclick="saveCards()">💾 Salvar Cards</button></div>
+          <button onclick="addCard()" style="background:#2e7d32; margin-top:18px;">+ Adicionar Novo Card</button>
+          <div class="actions"><button onclick="saveCards()">💾 Salvar Alterações</button></div>
         </div>
 
-        <!-- ABA DESIGN -->
         <div id="design-tab" class="hidden">
           <div class="setting-group"><label>Cor Topo (Degradê)</label><input type="color" id="s-bgTop"></div>
           <div class="setting-group"><label>Cor Fundo (Degradê)</label><input type="color" id="s-bgBottom"></div>
-          <div class="setting-group"><label>Cor Destaque</label><input type="color" id="s-accent"></div>
-          <div class="setting-group"><label>Cor Ícones/Setas</label><input type="color" id="s-accentSecondary"></div>
-          <div class="setting-group"><label>Fundo dos Cards</label><input type="text" id="s-cardBg"></div>
-          <div class="setting-group"><label>Borda dos Cards</label><input type="text" id="s-cardBorder"></div>
+          <div class="setting-group"><label>Cor Destaque (Bordas)</label><input type="color" id="s-accent"></div>
+          <div class="setting-group"><label>Cor Ícones e Setas</label><input type="color" id="s-accentSecondary"></div>
+          <div class="setting-group"><label>Fundo dos Cards</label><input type="text" id="s-cardBg" placeholder="ex: rgba(255,255,255,0.1)"></div>
+          <div class="setting-group"><label>Borda dos Cards</label><input type="text" id="s-cardBorder" placeholder="ex: rgba(255,255,255,0.2)"></div>
           <div class="setting-group"><label>Tagline (Subtítulo)</label><input type="text" id="s-tagline"></div>
           <div class="setting-group"><label>Rodapé</label><input type="text" id="s-footerText"></div>
           <div class="actions">
-            <button onclick="saveSettings()">💾 Salvar no Servidor</button>
-            <button class="btn-sec" onclick="resetSettings()">🔄 Resetar</button>
+            <button onclick="saveSettings()"> Salvar Design</button>
+            <button class="btn-sec" onclick="resetSettings()">🔄 Restaurar Padrão</button>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- PREVIEW AO VIVO -->
     <div class="preview-pane">
       <iframe id="preview" src="/" title="Preview do Site"></iframe>
     </div>
   </div>
-  <div id="toast" class="toast">✅ Salvo!</div>
+  <div id="toast" class="toast">✅ Salvo com sucesso!</div>
 
   <script>
     const PASS = 'mbigucci2026';
@@ -111,36 +135,37 @@
       document.getElementById('design-tab').classList.toggle('hidden', t!=='design');
     }
 
-    // --- CARDS ---
     function renderCards() {
       document.getElementById('cards-list').innerHTML = cards.map((c,i) => `
         <div class="card-item">
           <div class="row">
-            <input style="width:50px" value="${c.icon}" onchange="u(${i},'icon',this.value)">
-            <input value="${c.title}" onchange="u(${i},'title',this.value)" placeholder="Título">
+            <input type="text" class="icon-input" value="${c.icon}" onchange="u(${i},'icon',this.value)" placeholder="😀">
+            <input type="text" class="title-input" value="${c.title}" onchange="u(${i},'title',this.value)" placeholder="Título do Card">
           </div>
-          <input value="${c.desc}" onchange="u(${i},'desc',this.value)" placeholder="Descrição" style="margin-top:6px">
-          <input value="${c.link}" onchange="u(${i},'link',this.value)" placeholder="Link (# para vazio)" style="margin-top:6px">
-          <label style="display:flex;gap:6px;margin-top:6px;font-size:0.8rem;color:#aaa">
-            <input type="checkbox" ${c.highlight?'checked':''} onchange="u(${i},'highlight',this.checked)"> Destaque
+          <input type="text" class="desc-input" value="${c.desc}" onchange="u(${i},'desc',this.value)" placeholder="Descrição breve">
+          <input type="text" class="link-input" value="${c.link}" onchange="u(${i},'link',this.value)" placeholder="Link externo">
+          <label class="highlight-check">
+            <input type="checkbox" ${c.highlight?'checked':''} onchange="u(${i},'highlight',this.checked)">
+            <span>Ativar Destaque Visual</span>
           </label>
           <div class="actions">
-            <button class="btn-sec" onclick="mv(${i},-1)">⬆️</button>
-            <button class="btn-sec" onclick="mv(${i},1)">️</button>
-            <button class="btn-del" onclick="rm(${i})">🗑️</button>
+            <button class="btn-sec" onclick="mv(${i},-1)">️ Subir</button>
+            <button class="btn-sec" onclick="mv(${i},1)">⬇️ Descer</button>
+            <button class="btn-del" onclick="rm(${i})">🗑️ Remover</button>
           </div>
         </div>`).join('');
     }
+    
     function u(i,k,v){cards[i][k]=v;}
     function mv(i,d){if((d===-1&&i===0)||(d===1&&i===cards.length-1))return;[cards[i],cards[i+d]]=[cards[i+d],cards[i]];renderCards();}
-    function rm(i){if(confirm('Remover?')){cards.splice(i,1);renderCards();}}
-    function addCard(){cards.push({id:Date.now(),title:'Novo',desc:'Descrição',icon:'🔗',link:'#',highlight:false});renderCards();}
+    function rm(i){if(confirm('Remover este card?')){cards.splice(i,1);renderCards();}}
+    function addCard(){cards.push({id:Date.now(),title:'Novo Card',desc:'Descrição',icon:'🔗',link:'#',highlight:false});renderCards();}
+    
     async function saveCards(){
       const r=await fetch('/api/data',{method:'POST',headers:{'Content-Type':'application/json','Authorization':`Bearer ${PASS}`},body:JSON.stringify(cards)});
       if(r.ok)toast(); else alert('Erro ao salvar!');
     }
 
-    // --- DESIGN & PREVIEW ---
     function renderSettings() {
       document.getElementById('s-bgTop').value = settings.bgTop || '#D32F2F';
       document.getElementById('s-bgBottom').value = settings.bgBottom || '#8B0000';
@@ -150,48 +175,27 @@
       document.getElementById('s-cardBorder').value = settings.cardBorder || 'rgba(255,255,255,0.2)';
       document.getElementById('s-tagline').value = settings.tagline || 'UMA CONSTRUTORA COMPLETA';
       document.getElementById('s-footerText').value = settings.footerText || '© 2026 Mbigucci Construtora • Todos os direitos reservados';
-      sendPreviewUpdate(); // Aplica ao carregar
-    }
-
-    function updateSetting(key, value) {
-      settings[key] = value;
       sendPreviewUpdate();
     }
 
-    function sendPreviewUpdate() {
-      if(preview.contentWindow) {
-        preview.contentWindow.postMessage({ type: 'updateDesign', settings }, '*');
-      }
-    }
+    function updateSetting(key, value) { settings[key] = value; sendPreviewUpdate(); }
+    function sendPreviewUpdate() { if(preview.contentWindow) preview.contentWindow.postMessage({ type: 'updateDesign', settings }, '*'); }
 
-    // Bind inputs to live update
     document.querySelectorAll('#design-tab input').forEach(input => {
-      input.addEventListener('input', (e) => {
-        const key = e.target.id.replace('s-', '');
-        updateSetting(key, e.target.value);
-      });
+      input.addEventListener('input', (e) => { updateSetting(e.target.id.replace('s-', ''), e.target.value); });
     });
 
     async function saveSettings() {
-      const r = await fetch('/api/settings', {
-        method: 'POST',
-        headers: {'Content-Type':'application/json','Authorization':`Bearer ${PASS}`},
-        body: JSON.stringify(settings)
-      });
+      const r = await fetch('/api/settings', { method:'POST', headers:{'Content-Type':'application/json','Authorization':`Bearer ${PASS}`}, body: JSON.stringify(settings) });
       if(r.ok) toast(); else alert('Erro ao salvar!');
     }
 
     function resetSettings() {
-      settings = {
-        bgTop:'#D32F2F', bgBottom:'#8B0000', accent:'#FF3D3D', accentSecondary:'#FFD700',
-        cardBg:'rgba(0,0,0,0.4)', cardBorder:'rgba(255,255,255,0.2)',
-        tagline:'UMA CONSTRUTORA COMPLETA', footerText:'© 2026 Mbigucci Construtora • Todos os direitos reservados'
-      };
-      renderSettings();
-      saveSettings();
+      settings = { bgTop:'#D32F2F', bgBottom:'#8B0000', accent:'#FF3D3D', accentSecondary:'#FFD700', cardBg:'rgba(0,0,0,0.4)', cardBorder:'rgba(255,255,255,0.2)', tagline:'UMA CONSTRUTORA COMPLETA', footerText:'© 2026 Mbigucci Construtora • Todos os direitos reservados' };
+      renderSettings(); saveSettings();
     }
 
-    function toast(){const t=document.getElementById('toast');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2000);}
+    function toast(){const t=document.getElementById('toast');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
   </script>
 </body>
 </html>

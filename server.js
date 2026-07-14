@@ -3,43 +3,49 @@ const path = require('path');
 const fs = require('fs');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
-const ADMIN_PASS = process.env.ADMIN_PASS || 'mbigucci2026';
+const PORT = 3000;
 
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static('public'));
 
-const requireAuth = (req, res, next) => {
-  const token = req.headers.authorization;
-  if (token === `Bearer ${ADMIN_PASS}`) return next();
-  res.status(401).json({ error: 'Não autorizado' });
-};
-
-// --- CARDS ---
-app.get('/api/data', (req, res) => {
-  try { res.json(JSON.parse(fs.readFileSync(path.join(__dirname, 'public', 'data.json'), 'utf8'))); }
-  catch { res.status(500).json({ error: 'Erro ao carregar dados' }); }
-});
-app.post('/api/data', requireAuth, (req, res) => {
-  try {
-    fs.writeFileSync(path.join(__dirname, 'public', 'data.json'), JSON.stringify(req.body, null, 2));
-    res.json({ success: true });
-  } catch { res.status(500).json({ error: 'Erro ao salvar' }); }
+// ⚠️ ESTA LINHA É A SOLUÇÃO DO ERRO ⚠️
+// Ela diz: "Se alguém digitar /admin, abra o arquivo admin.html"
+app.get('/admin', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'admin.html'));
 });
 
-// --- SETTINGS (NOVO) ---
-app.get('/api/settings', (req, res) => {
-  try { res.json(JSON.parse(fs.readFileSync(path.join(__dirname, 'public', 'settings.json'), 'utf8'))); }
-  catch { res.json({}); }
-});
-app.post('/api/settings', requireAuth, (req, res) => {
-  try {
-    fs.writeFileSync(path.join(__dirname, 'public', 'settings.json'), JSON.stringify(req.body, null, 2));
-    res.json({ success: true });
-  } catch { res.status(500).json({ error: 'Erro ao salvar settings' }); }
+// Arquivo que guarda os links
+const DATA_FILE = path.join(__dirname, 'public', 'data.json');
+
+// Ler links
+app.get('/api/links', (req, res) => {
+  fs.readFile(DATA_FILE, 'utf8', (err, data) => {
+    if (err) {
+      res.json([]);
+    } else {
+      res.json(JSON.parse(data));
+    }
+  });
 });
 
-app.get('/admin', (req, res) => res.sendFile(path.join(__dirname, 'public', 'admin.html')));
-app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'public', 'index.html')));
+// Salvar links (só com senha)
+app.post('/api/links', (req, res) => {
+  const { password, links } = req.body;
+  
+  if (password !== 'mbigucci2026') {
+    return res.status(401).json({ error: 'Senha incorreta' });
+  }
+  
+  fs.writeFile(DATA_FILE, JSON.stringify(links, null, 2), (err) => {
+    if (err) {
+      res.status(500).json({ error: 'Erro ao salvar' });
+    } else {
+      res.json({ success: true });
+    }
+  });
+});
 
-app.listen(PORT, () => console.log(`🚀 Rodando em http://localhost:${PORT} | 🔐 Admin: /admin`));
+app.listen(PORT, () => {
+  console.log(`✅ Servidor rodando: http://localhost:${PORT}`);
+  console.log(`🔐 Admin: http://localhost:${PORT}/admin`);
+});

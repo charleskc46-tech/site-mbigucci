@@ -1,11 +1,8 @@
 {
-  "name": "site-mbigucci",
+  "name": "mbigucci-links",
   "version": "1.0.0",
-  "description": "Site Linktree Mbigucci Construtora",
-  "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node server.js"
+    "start": "node server.js"
   },
   "dependencies": {
     "express": "^4.18.2"

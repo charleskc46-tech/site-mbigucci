@@ -1,42 +1,17 @@
 [
   {
-    "id": 3,
-    "title": "Missão & Valores",
-    "desc": "Princípios que guiam nossa trajetória",
-    "icon": "🎯",
-    "link": "https://mbigucci.com.br/institucional/",
-    "highlight": false
+    "title": "MISSÃO, VISÃO E VALORES",
+    "url": "https://mbigucci.com.br/institucional/",
+    "icon": "🔗"
   },
   {
-    "id": 1,
-    "title": "BIGS",
-    "desc": "Projetos de impacto social e ambiental",
-    "icon": "🚀",
-    "link": "https://docs.google.com/gview?embedded=true&url=https://ugc.production.linktr.ee/f217f423-b82d-431c-84c5-31d0b8e60ae7_Bigs.pdf",
-    "highlight": false
+    "title": "LEAN HUNTER",
+    "url": "https://construtorambigucci-my.sharepoint.com/:p:/g/personal/roberta_mbigucci_com_br/IQDhrjKEpRSvTYsTJ-2bsbarAfeUmSp2P638sUtGFEeXUoE?e=O6H3pK&action=embedview",
+    "icon": "🔗"
   },
   {
-    "id": 4,
-    "title": "De Frente com Roberta",
-    "desc": "Liderança, visão e bastidores",
-    "icon": "🎙️",
-    "link": "https://drive.google.com/file/d/1E7vjWSgxuco_OMH2T8XyGQkDy2f7UxpH/preview",
-    "highlight": false
-  },
-  {
-    "id": 5,
-    "title": "Pacto Global",
-    "desc": "Compromisso ONU: sustentabilidade e ética",
-    "icon": "🌐",
-    "link": "https://mbigucci.com.br/pacto-global/",
-    "highlight": false
-  },
-  {
-    "id": 1783443647452,
-    "title": "teste",
-    "desc": "Descrição",
-    "icon": "🔗",
-    "link": "#",
-    "highlight": false
+    "title": "DE FRENTE COM A ROBERTA",
+    "url": "/documento.html",
+    "icon": "🔗"
   }
 ]
